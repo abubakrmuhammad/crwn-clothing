@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FormInput from '../FormInput/FormInput';
 import Button from '../Button/Button';
+import { signInWithGoogle } from '../../firebase/firebase.utils';
 
 import './SignIn.scss';
 
@@ -21,6 +22,11 @@ class SignIn extends Component {
     const { value, name } = event.target;
 
     this.setState({ [name]: value });
+  };
+
+  handleGoogleSignIn = event => {
+    event.preventDefault();
+    signInWithGoogle();
   };
 
   render() {
@@ -47,8 +53,12 @@ class SignIn extends Component {
             handleChange={this.handleChange}
             required
           />
-
-          <Button type='submit'>Sign In</Button>
+          <div className='buttons'>
+            <Button type='submit'>Sign In</Button>
+            <Button onClick={this.handleGoogleSignIn} isGoogleSignIn>
+              Sign in with Google
+            </Button>
+          </div>
         </form>
       </div>
     );
