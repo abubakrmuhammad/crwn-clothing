@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormInput from '../FormInput/FormInput';
 import Button from '../Button/Button';
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { signInWithGoogle, auth } from '../../firebase/firebase.utils';
 
 import './SignIn.scss';
 
@@ -12,10 +12,17 @@ class SignIn extends Component {
     this.state = { email: '', password: '' };
   }
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
 
-    this.setState({ email: '', password: '' });
+    const { email, password } = this.state;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      this.setState({ email: '', password: '' });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   handleChange = event => {
@@ -33,28 +40,28 @@ class SignIn extends Component {
     const { email, password } = this.state;
 
     return (
-      <div className='sign-in'>
+      <div className="sign-in">
         <h2>I already have an account</h2>
         <span>Sign in with your email and password</span>
-        <form onSubmit={this.handleSubmit} autoComplete='off'>
+        <form onSubmit={this.handleSubmit} autoComplete="off">
           <FormInput
-            label='Email'
-            type='email'
-            name='email'
+            label="Email"
+            type="email"
+            name="email"
             value={email}
             handleChange={this.handleChange}
             required
           />
           <FormInput
-            label='Password'
-            type='password'
-            name='password'
+            label="Password"
+            type="password"
+            name="password"
             value={password}
             handleChange={this.handleChange}
             required
           />
-          <div className='buttons'>
-            <Button type='submit'>Sign In</Button>
+          <div className="buttons">
+            <Button type="submit">Sign In</Button>
             <Button onClick={this.handleGoogleSignIn} isGoogleSignIn>
               Sign in with Google
             </Button>
