@@ -8,10 +8,13 @@
   font-size: 15px;
   background-color: black;
   color: white;
+  display: flex;
+  justify-content: center;
   text-transform: uppercase;
   font-family: inherit;
   font-weight: bolder;
   border: none;
+  user-select: none;
   cursor: pointer;
 
   &:hover {
@@ -26,6 +29,18 @@
 
     &:hover {
       background-color: #357ae8;
+      border: none;
+    }
+  }
+
+  &.inverted {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid currentColor;
+
+    &:hover {
+      background-color: #000;
+      color: #fff;
       border: none;
     }
   }
